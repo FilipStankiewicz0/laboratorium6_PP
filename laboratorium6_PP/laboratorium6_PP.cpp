@@ -1,7 +1,7 @@
 // laboratorium6_PP.cpp
+// FILIP STANKIEWICZ 170396
 
-
-// ZADANIE 1 - do skonczenia zmienne lokalne
+// ZADANIE 1
 /* #include <iostream>
 using namespace std;
 int a = 20;
@@ -13,7 +13,7 @@ void suma(int a, int b) {
 }
 
 int main() {
-	suma();
+	suma(a,b);
 	int a = 1, b = 2;
 	suma(a, b);
 }
@@ -28,13 +28,14 @@ void usun();
 
 void usun() {
 	int x;
-	cout << endl << "Podaj ktory element chcesz usunac (0-9): ";
+	cout << endl << "Podaj indeks elementu ktory chcesz usunac (0-9): ";
 	cin >> x;
 	for (int i = x; i < rozmiar - 1; i++) {
 		tab[i] = tab[i + 1];
 	}
+	rozmiar--;
 	cout << endl << "Tablica po usunieciu elementu:";
-	for (int i = 0; i < rozmiar - 1; i++) {
+	for (int i = 0; i < rozmiar; i++) {
 		cout << " " << tab[i];
 	}
 }
@@ -52,41 +53,45 @@ int main() {
 }
 */
 
+
 // ZADANIE 3 - do skonczenia funkcja zapisz()
 /* #include <iostream>
 using namespace std;
 float TEMP1[10];
 float TEMP2[10];
 int INDEKS = 0;
-float przelicz();
-float zapisz(float a);
+float przelicz(float podana);
+void zapisz(float podana, float przeliczona);
 void wyswietl();
 
-float przelicz() {
-	float podana_temp;
-	podana_temp = TEMP1[INDEKS] + 273.15;
-	return podana_temp;
+float przelicz(float podana) {
+	return podana + 273.15;
 }
 
-float zapisz(float a) {
-	TEMP2[INDEKS] = a;
-	return 0;
+void zapisz(float podana, float przeliczona) {
+	if (INDEKS >= 10) {
+		cout << "Koniec miejsca w tablicy, przeliczenie nie zostanie zapisane. ";
+		return;
+	}
+	TEMP1[INDEKS] = podana;
+	TEMP2[INDEKS] = przeliczona;
+	INDEKS++;
 }
 
 void wyswietl() {
 	cout << endl << endl << "Indeks\t\tCelsjusz\tKelvin";
-		for (INDEKS = 0; INDEKS < 10; INDEKS++) {
-		cout << endl << INDEKS + 1 << "\t\t" << TEMP1[INDEKS] << "\t\t" << TEMP2[INDEKS];
+		for (int i = 0; i < INDEKS; i++) {
+		cout << endl << i + 1 << "\t\t" << TEMP1[i] << "\t\t" << TEMP2[i];
 		}
 }
 
 int main() {
-	float a;
-	for (INDEKS = 0; INDEKS < 10; INDEKS++) {
-		cout << endl << endl << "Podaj temperature w stopniach Celsjusza: ";
-		cin >> TEMP1[INDEKS];
-		a = przelicz();
-		zapisz(a);
+	float przeliczona, podana;
+	for (int i = 0; i < 10; i++) {
+		cout << endl << "Podaj temperature w stopniach Celsjusza: ";
+		cin >> podana;
+		przeliczona = przelicz(podana);
+		zapisz(podana, przeliczona);
 	}
 	wyswietl();
 }
